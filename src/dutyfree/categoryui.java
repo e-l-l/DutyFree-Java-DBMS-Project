@@ -4,6 +4,15 @@
  */
 package dutyfree;
 
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
+
 /**
  *
  * @author Hp
@@ -15,7 +24,11 @@ public class categoryui extends javax.swing.JFrame {
      */
     public categoryui() {
         initComponents();
+        selectCat();
     }
+    Connection connect = null;
+    Statement st = null;
+    ResultSet rs = null;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,11 +42,12 @@ public class categoryui extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        catName = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        catTable = new javax.swing.JTable();
+        catAdd = new javax.swing.JButton();
+        catDel = new javax.swing.JButton();
+        catUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,18 +64,18 @@ public class categoryui extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(159, 11, 11));
         jLabel3.setText("Category Name");
 
-        jTextField1.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("Perfumes");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        catName.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        catName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        catName.setText("Perfumes");
+        catName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                catNameActionPerformed(evt);
             }
         });
 
-        jTable1.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(159, 11, 11));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        catTable.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        catTable.setForeground(new java.awt.Color(159, 11, 11));
+        catTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -76,30 +90,60 @@ public class categoryui extends javax.swing.JFrame {
                 "CATEGORIES"
             }
         ));
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setDebugGraphicsOptions(javax.swing.DebugGraphics.FLASH_OPTION);
-        jTable1.setDropMode(javax.swing.DropMode.ON);
-        jTable1.setRowHeight(30);
-        jScrollPane1.setViewportView(jTable1);
+        catTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        catTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        catTable.setDebugGraphicsOptions(javax.swing.DebugGraphics.FLASH_OPTION);
+        catTable.setDropMode(javax.swing.DropMode.ON);
+        catTable.setRowHeight(30);
+        catTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                catTableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(catTable);
 
-        jButton3.setBackground(new java.awt.Color(0, 0, 0));
-        jButton3.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("ADD");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        catAdd.setBackground(new java.awt.Color(0, 0, 0));
+        catAdd.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        catAdd.setForeground(new java.awt.Color(255, 255, 255));
+        catAdd.setText("ADD");
+        catAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                catAddMouseClicked(evt);
+            }
+        });
+        catAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                catAddActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(0, 0, 0));
-        jButton4.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("DELETE");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        catDel.setBackground(new java.awt.Color(0, 0, 0));
+        catDel.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        catDel.setForeground(new java.awt.Color(255, 255, 255));
+        catDel.setText("DELETE");
+        catDel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                catDelMouseClicked(evt);
+            }
+        });
+        catDel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                catDelActionPerformed(evt);
+            }
+        });
+
+        catUpdate.setBackground(new java.awt.Color(0, 0, 0));
+        catUpdate.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        catUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        catUpdate.setText("UPDATE");
+        catUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                catUpdateMouseClicked(evt);
+            }
+        });
+        catUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                catUpdateActionPerformed(evt);
             }
         });
 
@@ -108,15 +152,21 @@ public class categoryui extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(73, 73, 73)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(catName, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(catAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(catDel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(catUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(141, 141, 141)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(73, 73, 73))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -133,11 +183,13 @@ public class categoryui extends javax.swing.JFrame {
                         .addGap(61, 61, 61)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(catName, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4)))
+                            .addComponent(catAdd)
+                            .addComponent(catDel))
+                        .addGap(18, 18, 18)
+                        .addComponent(catUpdate))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -157,18 +209,79 @@ public class categoryui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+public void selectCat() {
+        try {
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+            st = connect.createStatement();
+            rs = st.executeQuery("select * from categories");
+            catTable.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void catAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catAddActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_catAddActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void catDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catDelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_catDelActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void catNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_catNameActionPerformed
+
+    private void catAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catAddMouseClicked
+        if (catName.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Information is missing");
+        } else {
+            try {
+                connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+                PreparedStatement add = connect.prepareStatement("insert into categories(category) values(?)");
+                add.setString(1, catName.getText());
+                int row = add.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Category added");
+                connect.close();
+                selectCat();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_catAddMouseClicked
+
+    private void catTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catTableMouseClicked
+        DefaultTableModel model = (DefaultTableModel) catTable.getModel();
+        int myIndex = catTable.getSelectedRow();
+        catName.setText(model.getValueAt(myIndex, 1).toString());// TODO add your handling code here:
+    }//GEN-LAST:event_catTableMouseClicked
+
+    private void catUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catUpdateMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_catUpdateMouseClicked
+
+    private void catUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_catUpdateActionPerformed
+
+    private void catDelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catDelMouseClicked
+        if (catName.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "enter name of category to be deleted");
+
+        } else {
+            try {
+                connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+                String cName = catName.getText();
+                String query = "delete from categories where category=" + "\"" + cName + "\"";
+                Statement add = connect.createStatement();
+                add.executeUpdate(query);
+                selectCat();
+                JOptionPane.showMessageDialog(this, "Category Deleted Successfully");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_catDelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -206,13 +319,14 @@ public class categoryui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton catAdd;
+    private javax.swing.JButton catDel;
+    private javax.swing.JTextField catName;
+    private javax.swing.JTable catTable;
+    private javax.swing.JButton catUpdate;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

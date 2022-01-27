@@ -42,6 +42,7 @@ public class employeeui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         prodName = new javax.swing.JTextField();
@@ -63,6 +64,9 @@ public class employeeui extends javax.swing.JFrame {
         BillId = new javax.swing.JTextField();
         billPrint = new javax.swing.JButton();
         logoutNav = new javax.swing.JLabel();
+        grandTotal = new javax.swing.JLabel();
+
+        jLabel4.setText("jLabel4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -209,13 +213,18 @@ public class employeeui extends javax.swing.JFrame {
             }
         });
 
+        grandTotal.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        grandTotal.setForeground(new java.awt.Color(255, 255, 255));
+        grandTotal.setText("Grand Total: ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(logoutNav, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(logoutNav, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(268, 268, 268))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -246,21 +255,25 @@ public class employeeui extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                                    .addComponent(grandTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(41, 41, 41))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(billPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(186, 186, 186))))))
+                                .addGap(191, 191, 191))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(logoutNav, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(1, 1, 1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(1, 1, 1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(logoutNav, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jLabel1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -289,15 +302,14 @@ public class employeeui extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(prodCat1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(prodCat2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(billPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(grandTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(prodCat2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(billPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -324,41 +336,61 @@ public void selectProd() {
             e.printStackTrace();
         }
     }
+
+    public void updateStock() {
+        try {
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+            String query = "Update items set stock=" + newStock + "" + " where item_name='" + prodName.getText() + "'";
+            Statement update = connect.createStatement();
+            update.executeUpdate(query);
+            JOptionPane.showMessageDialog(this, "Product updated");
+            selectProd();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void prodStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prodStockActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_prodStockActionPerformed
     int i = 0;
+    int newStock;
     private void prodAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prodAddMouseClicked
         if (prodName.getText().isEmpty() || prodStock.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Information is missing");
+        } else if (availQty < Integer.valueOf(prodStock.getText())) {
+            JOptionPane.showMessageDialog(this, "Out of Stock");
         } else {
             i++;
             prodTot = uPrice * Integer.valueOf(prodStock.getText());
+            grdTot += prodTot;
             if (i == 1) {
                 Billtxt.setText(Billtxt.getText() + ""
                         + "/t==========================dutyfree==========================\n" + "\tNUM         PRODUCT         COST         QUANTITY        TOTAL PRICE\n\t" + i + "         " + prodName.getText() + "         " + uPrice + "         " + prodStock.getText() + "         " + prodTot + "\n\t");
             } else {
                 Billtxt.setText(Billtxt.getText() + i + "         " + prodName.getText() + "         " + uPrice + "         " + prodStock.getText() + "         " + prodTot + "\n\t");
             }
+            grandTotal.setText("Grand Total = " + grdTot + " Rs");
+            newStock = availQty - Integer.valueOf(prodStock.getText());
+            System.out.println(newStock);
+            updateStock();
         }
-
         selectProd();
-
-
     }//GEN-LAST:event_prodAddMouseClicked
 
     private void prodAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prodAddActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_prodAddActionPerformed
 
-    int uPrice,prodTot; 
+    int uPrice, prodTot, grdTot;
+    int availQty;
     private void prodTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prodTableMouseClicked
         DefaultTableModel model = (DefaultTableModel) prodTable.getModel();
         int myIndex = prodTable.getSelectedRow();
         uPrice = Integer.valueOf(model.getValueAt(myIndex, 3).toString());
 //        prodId.setText(model.getValueAt(myIndex, 0).toString());
         prodName.setText(model.getValueAt(myIndex, 1).toString());
-        prodTot=uPrice*Integer.valueOf(prodStock.getText());
+//        prodTot=uPrice*Integer.valueOf(prodStock.getText());
+        availQty = Integer.valueOf(model.getValueAt(myIndex, 4).toString());
 //        prodCost.setText(model.getValueAt(myIndex, 3).toString());
 //        prodStock.setText(model.getValueAt(myIndex, 4).toString());
     }//GEN-LAST:event_prodTableMouseClicked
@@ -372,18 +404,7 @@ public void selectProd() {
     }//GEN-LAST:event_prodCat2ActionPerformed
 
     private void BilltxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BilltxtMouseClicked
-//if(prodStock.getText().isEmpty()|| prodName.getText().isEmpty())
-//{
-//   JOptionPane.showMessageDialog(this, "Missing Information");
-//}
-//else{
-//    i++;
-//    if(i==1)
-//    {
-//        Billtxt.setText(Billtxt.getText()+""
-//                + "\t==========================dutyfree==========================\n"+"\tNUM         PRODUCT         COST         QUANTITY        TOTAL PRICE\n\t"+i+"         "+prodName.getText()+"         "+uPrice+"         "+prodStock.getText()+"         "+prodTot+"\n\t");
-//    }
-//}
+
     }//GEN-LAST:event_BilltxtMouseClicked
 
     private void billPrintMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_billPrintMouseClicked
@@ -420,25 +441,17 @@ public void selectProd() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(employeeui
-
-.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(employeeui.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(employeeui
-
-.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(employeeui.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(employeeui
-
-.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(employeeui.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(employeeui
-
-.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(employeeui.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -454,11 +467,13 @@ public void selectProd() {
     private javax.swing.JTextField BillId;
     private javax.swing.JTextArea Billtxt;
     private javax.swing.JButton billPrint;
+    private javax.swing.JLabel grandTotal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;

@@ -62,7 +62,7 @@ public class logon extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("LOG IN");
 
-        UID.setFont(new java.awt.Font("Montserrat", 0, 8)); // NOI18N
+        UID.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         UID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UIDActionPerformed(evt);
@@ -90,7 +90,7 @@ public class logon extends javax.swing.JFrame {
             }
         });
 
-        passWord.setFont(new java.awt.Font("Montserrat", 0, 8)); // NOI18N
+        passWord.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         passWord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passWordActionPerformed(evt);
@@ -113,12 +113,15 @@ public class logon extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(78, 78, 78)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(passWord, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(UID, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addGap(0, 75, Short.MAX_VALUE))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addGap(0, 147, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(passWord, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                    .addComponent(UID))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,12 +131,12 @@ public class logon extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(UID, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(UID, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(passWord, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(passWord, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(loginButton)
                 .addContainerGap(48, Short.MAX_VALUE))
         );
@@ -219,7 +222,7 @@ public class logon extends javax.swing.JFrame {
     }//GEN-LAST:event_UIDActionPerformed
     String uId, pass;
     private void loginButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginButtonMouseClicked
-        uId = UID.getText();
+        uId = UID.getText().toString();
         String query = "select * from users where user_name='" + uId + "' and pword ='" + passWord.getText() + "'";
         try {
             connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
@@ -227,7 +230,7 @@ public class logon extends javax.swing.JFrame {
             rs = st.executeQuery(query);
             if (rs.next()) {
                 System.out.println(uId);
-                if (uId == "Seller") {
+                if (uId.equals("Seller")) {
                     new employeeui().setVisible(true);
                     this.dispose();
                 } else {

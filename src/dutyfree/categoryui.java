@@ -72,7 +72,6 @@ public class categoryui extends javax.swing.JFrame {
 
         catName.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
         catName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        catName.setText("Perfumes");
         catName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 catNameActionPerformed(evt);
@@ -80,7 +79,6 @@ public class categoryui extends javax.swing.JFrame {
         });
 
         catTable.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
-        catTable.setForeground(new java.awt.Color(255, 255, 255));
         catTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -100,7 +98,8 @@ public class categoryui extends javax.swing.JFrame {
         catTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         catTable.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         catTable.setRowHeight(30);
-        catTable.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        catTable.setSelectionBackground(new java.awt.Color(255, 0, 83));
+        catTable.setSelectionForeground(new java.awt.Color(102, 255, 255));
         catTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 catTableMouseClicked(evt);
@@ -259,12 +258,6 @@ public void selectCat() {
         }
     }//GEN-LAST:event_catAddMouseClicked
 
-    private void catTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catTableMouseClicked
-        DefaultTableModel model = (DefaultTableModel) catTable.getModel();
-        int myIndex = catTable.getSelectedRow();
-        catName.setText(model.getValueAt(myIndex, 1).toString());// TODO add your handling code here:
-    }//GEN-LAST:event_catTableMouseClicked
-
     private void catDelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catDelMouseClicked
         if (catName.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "enter name of category to be deleted");
@@ -294,6 +287,12 @@ public void selectCat() {
        new logon().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logoutNavMouseClicked
+
+    private void catTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catTableMouseClicked
+        DefaultTableModel model = (DefaultTableModel) catTable.getModel();
+        int myIndex = catTable.getSelectedRow();
+        catName.setText(model.getValueAt(myIndex, 1).toString());// TODO add your handling code here:
+    }//GEN-LAST:event_catTableMouseClicked
 
     /**
      * @param args the command line arguments

@@ -4,6 +4,15 @@
  */
 package dutyfree;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
+
 /**
  *
  * @author Hp
@@ -15,7 +24,13 @@ public class flightdata extends javax.swing.JFrame {
      */
     public flightdata() {
         initComponents();
+        selectFlights();
+        selectAir();
     }
+    Connection connect = null;
+    Statement st = null;
+    ResultSet rsf = null;
+    ResultSet rsa = null;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,17 +44,23 @@ public class flightdata extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        catName = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        addFlight = new javax.swing.JButton();
+        delFlight = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        prodCat = new javax.swing.JComboBox<>();
-        prodCat1 = new javax.swing.JComboBox<>();
+        flightTable = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        airTable = new javax.swing.JTable();
+        addAir = new javax.swing.JButton();
+        deleteAir = new javax.swing.JButton();
+        prodNav = new javax.swing.JLabel();
+        logoutNav = new javax.swing.JLabel();
+        airCode = new javax.swing.JTextField();
+        flightName = new javax.swing.JTextField();
 
         jButton2.setBackground(new java.awt.Color(0, 0, 0));
         jButton2.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
@@ -76,6 +97,15 @@ public class flightdata extends javax.swing.JFrame {
         jTable1.setSelectionForeground(new java.awt.Color(102, 255, 255));
         jScrollPane1.setViewportView(jTable1);
 
+        catName.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        catName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        catName.setText("Perfumes");
+        catName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                catNameActionPerformed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(159, 11, 11));
@@ -94,67 +124,147 @@ public class flightdata extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("AIRPORT CODE");
 
-        jButton3.setBackground(new java.awt.Color(0, 0, 0));
-        jButton3.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("ADD");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        addFlight.setBackground(new java.awt.Color(0, 0, 0));
+        addFlight.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        addFlight.setForeground(new java.awt.Color(255, 255, 255));
+        addFlight.setText("ADD");
+        addFlight.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addFlightMouseClicked(evt);
+            }
+        });
+        addFlight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                addFlightActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(0, 0, 0));
-        jButton4.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("UPDATE");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        delFlight.setBackground(new java.awt.Color(0, 0, 0));
+        delFlight.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        delFlight.setForeground(new java.awt.Color(255, 255, 255));
+        delFlight.setText("DELETE");
+        delFlight.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                delFlightMouseClicked(evt);
+            }
+        });
+        delFlight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                delFlightActionPerformed(evt);
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(0, 0, 0));
-        jButton5.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("DELETE");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        flightTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "FLIGHT NAME", "AIRPORT CODE"
+                "FLIGHT NAME"
             }
         ));
-        jTable2.setRowHeight(25);
-        jScrollPane2.setViewportView(jTable2);
+        flightTable.setRowHeight(25);
+        flightTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                flightTableMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(flightTable);
 
-        prodCat.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        prodCat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LAX", "SFO", "EWR", "BO", "HTX" }));
-        prodCat.addActionListener(new java.awt.event.ActionListener() {
+        airTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "AIRPORT CODE"
+            }
+        ));
+        airTable.setRowHeight(25);
+        airTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                airTableMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(airTable);
+
+        addAir.setBackground(new java.awt.Color(0, 0, 0));
+        addAir.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        addAir.setForeground(new java.awt.Color(255, 255, 255));
+        addAir.setText("ADD");
+        addAir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addAirMouseClicked(evt);
+            }
+        });
+        addAir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                prodCatActionPerformed(evt);
+                addAirActionPerformed(evt);
             }
         });
 
-        prodCat1.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        prodCat1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EMIRATES", "VISTARA", "UNITED AIRLINES" }));
-        prodCat1.addActionListener(new java.awt.event.ActionListener() {
+        deleteAir.setBackground(new java.awt.Color(0, 0, 0));
+        deleteAir.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        deleteAir.setForeground(new java.awt.Color(255, 255, 255));
+        deleteAir.setText("DELETE");
+        deleteAir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteAirMouseClicked(evt);
+            }
+        });
+        deleteAir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                prodCat1ActionPerformed(evt);
+                deleteAirActionPerformed(evt);
+            }
+        });
+
+        prodNav.setBackground(new java.awt.Color(159, 11, 11));
+        prodNav.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        prodNav.setForeground(new java.awt.Color(255, 255, 255));
+        prodNav.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        prodNav.setText("PRODUCTS");
+        prodNav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                prodNavMouseClicked(evt);
+            }
+        });
+
+        logoutNav.setBackground(new java.awt.Color(159, 11, 11));
+        logoutNav.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        logoutNav.setForeground(new java.awt.Color(255, 255, 255));
+        logoutNav.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logoutNav.setText("Log Out");
+        logoutNav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutNavMouseClicked(evt);
+            }
+        });
+
+        airCode.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        airCode.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        airCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                airCodeActionPerformed(evt);
+            }
+        });
+
+        flightName.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        flightName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        flightName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                flightNameActionPerformed(evt);
             }
         });
 
@@ -163,47 +273,73 @@ public class flightdata extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGap(10, 10, 10)
+                .addComponent(logoutNav, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(89, 89, 89)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2)
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(addFlight, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(delFlight, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(92, 92, 92)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(airCode, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(addAir, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(deleteAir, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(243, 243, 243)
-                        .addComponent(jLabel4))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(prodCat1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(prodCat, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(128, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(flightName, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(prodNav, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(193, 193, 193)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(200, 200, 200))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(prodNav, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(logoutNav, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(airCode, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(flightName, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addAir)
+                    .addComponent(deleteAir)
+                    .addComponent(delFlight)
+                    .addComponent(addFlight))
+                .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(prodCat, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(prodCat1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
-                .addGap(29, 29, 29)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -219,30 +355,154 @@ public class flightdata extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+public void selectFlights() {
+        try {
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+            st = connect.createStatement();
+            rsf = st.executeQuery("select * from flights_info");
+            flightTable.setModel(DbUtils.resultSetToTableModel(rsf));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void selectAir() {
+        try {
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+            st = connect.createStatement();
+            rsa = st.executeQuery("select * from airports");
+            airTable.setModel(DbUtils.resultSetToTableModel(rsa));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void addFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFlightActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_addFlightActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void delFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delFlightActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_delFlightActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void addAirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_addAirActionPerformed
 
-    private void prodCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prodCatActionPerformed
+    private void deleteAirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_prodCatActionPerformed
+    }//GEN-LAST:event_deleteAirActionPerformed
 
-    private void prodCat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prodCat1ActionPerformed
+    private void prodNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prodNavMouseClicked
+        new adminui().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_prodNavMouseClicked
+
+    private void logoutNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutNavMouseClicked
+        new logon().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_logoutNavMouseClicked
+
+    private void addFlightMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addFlightMouseClicked
+        if (flightName.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Airport code missing");
+        } else {
+            try {
+                connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+                PreparedStatement add = connect.prepareStatement("insert into flights_info(flight_name) values(?)");
+                add.setString(1, flightName.getText().toString());
+                int row = add.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Flight added");
+                connect.close();
+                selectFlights();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+    }//GEN-LAST:event_addFlightMouseClicked
+    }
+    private void addAirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addAirMouseClicked
+        if (airCode.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Airport code missing");
+        } else {
+            try {
+                connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+                PreparedStatement add = connect.prepareStatement("insert into airports values(?)");
+                add.setString(1, airCode.getText().toString());
+                int row = add.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Airport added");
+                connect.close();
+                selectAir();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }        // TODO add your handling code here:
+    }//GEN-LAST:event_addAirMouseClicked
+    }
+    private void catNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_prodCat1ActionPerformed
+    }//GEN-LAST:event_catNameActionPerformed
+
+    private void airCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_airCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_airCodeActionPerformed
+
+    private void flightNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flightNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_flightNameActionPerformed
+
+    private void delFlightMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delFlightMouseClicked
+if (flightName.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "enter name of Flight to be deleted");
+            
+        } else {
+            try {
+                connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+                String fname = flightName.getText();
+                String query = "delete from flights_info where flight_name='" +fname+"'";
+                Statement add = connect.createStatement();
+                add.executeUpdate(query);
+                selectFlights();
+                JOptionPane.showMessageDialog(this, "Flight Deleted Successfully");
+                selectFlights();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }        // TODO add your handling code here:
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_delFlightMouseClicked
+
+    private void deleteAirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteAirMouseClicked
+if (airCode.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "enter code of airport to be deleted");
+            
+        } else {
+            try {
+                connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+                String aCode = airCode.getText();
+                String query = "delete from airports where airport_code='" +aCode+"'";
+                Statement add = connect.createStatement();
+                add.executeUpdate(query);
+                selectFlights();
+                JOptionPane.showMessageDialog(this, "Airport Deleted Successfully");
+                selectAir();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }        // TODO add your handling code here:
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteAirMouseClicked
+
+    private void flightTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_flightTableMouseClicked
+ DefaultTableModel model = (DefaultTableModel) flightTable.getModel();
+        int myIndex = flightTable.getSelectedRow();
+        flightName.setText(model.getValueAt(myIndex, 1).toString());
+    }//GEN-LAST:event_flightTableMouseClicked
+
+    private void airTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_airTableMouseClicked
+DefaultTableModel model = (DefaultTableModel) airTable.getModel();
+        int myIndex = airTable.getSelectedRow();
+        airCode.setText(model.getValueAt(myIndex, 0).toString());
+    }//GEN-LAST:event_airTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -280,19 +540,25 @@ public class flightdata extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addAir;
+    private javax.swing.JButton addFlight;
+    private javax.swing.JTextField airCode;
+    private javax.swing.JTable airTable;
+    private javax.swing.JTextField catName;
+    private javax.swing.JButton delFlight;
+    private javax.swing.JButton deleteAir;
+    private javax.swing.JTextField flightName;
+    private javax.swing.JTable flightTable;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JComboBox<String> prodCat;
-    private javax.swing.JComboBox<String> prodCat1;
+    private javax.swing.JLabel logoutNav;
+    private javax.swing.JLabel prodNav;
     // End of variables declaration//GEN-END:variables
 }

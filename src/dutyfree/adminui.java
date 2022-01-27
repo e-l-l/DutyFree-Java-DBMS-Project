@@ -54,10 +54,12 @@ public class adminui extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         prodTable = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
+        catNavigator = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         prodCost = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        logoutNav = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -182,16 +184,36 @@ public class adminui extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(prodTable);
 
-        jLabel7.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Store Inventory");
+        catNavigator.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        catNavigator.setForeground(new java.awt.Color(255, 255, 255));
+        catNavigator.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        catNavigator.setText("Categories");
+        catNavigator.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                catNavigatorMouseClicked(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Product Id");
 
         prodCost.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+
+        jLabel9.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Store Inventory");
+
+        logoutNav.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
+        logoutNav.setForeground(new java.awt.Color(255, 255, 255));
+        logoutNav.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logoutNav.setText("Log Out");
+        logoutNav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutNavMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
@@ -238,20 +260,28 @@ public class adminui extends javax.swing.JFrame {
                         .addGap(73, 73, 73))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(239, 239, 239))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(237, 237, 237))))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(237, 237, 237))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(logoutNav, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(catNavigator, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                    .addContainerGap(268, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(229, 229, 229)))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(catNavigator, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(logoutNav, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(30, 30, 30)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -287,6 +317,11 @@ public class adminui extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47))
+            .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                    .addGap(27, 27, 27)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(576, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -359,7 +394,7 @@ public void selectProd() {
     private void prodDelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prodDelMouseClicked
         if (prodId.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "enter ID of Product to be deleted");
-
+            
         } else {
             try {
                 connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
@@ -369,7 +404,7 @@ public void selectProd() {
                 add.executeUpdate(query);
                 selectProd();
                 JOptionPane.showMessageDialog(this, "Product Deleted Successfully");
-
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }        // TODO add your handling code here:
@@ -390,7 +425,7 @@ public void selectProd() {
         } else {
             try {
                 connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
-                String query = "Update items set item_name='" + prodName.getText()+ "'"+",category='" + prodCat.getSelectedItem().toString()+ "'"+",cost=" + prodCost.getText()+ ""+",stock=" + prodStock.getText()+"" +" where item_id=" + prodId.getText();
+                String query = "Update items set item_name='" + prodName.getText() + "'" + ",category='" + prodCat.getSelectedItem().toString() + "'" + ",cost=" + prodCost.getText() + "" + ",stock=" + prodStock.getText() + "" + " where item_id=" + prodId.getText();
                 Statement update = connect.createStatement();
                 update.executeUpdate(query);
                 JOptionPane.showMessageDialog(this, "Product updated");
@@ -400,11 +435,21 @@ public void selectProd() {
             }
     }//GEN-LAST:event_prodUpdateMouseClicked
     }
+    private void catNavigatorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catNavigatorMouseClicked
+        new categoryui().setVisible(true);   
+        this.dispose();// TODO add your handling code here:
+    }//GEN-LAST:event_catNavigatorMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    private void logoutNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutNavMouseClicked
+        new logon().setVisible(true);   
+        this.dispose();
+    }//GEN-LAST:event_logoutNavMouseClicked
+
+
+/**
+ * @param args the command line arguments
+ */
+public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -418,13 +463,25 @@ public void selectProd() {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(adminui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminui
+
+.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(adminui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminui
+
+.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(adminui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminui
+
+.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(adminui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminui
+
+.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -438,16 +495,18 @@ public void selectProd() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel catNavigator;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private keeptoo.KGradientPanel kGradientPanel1;
+    private javax.swing.JLabel logoutNav;
     private javax.swing.JButton prodAdd;
     private javax.swing.JComboBox<String> prodCat;
     private javax.swing.JTextField prodCost;

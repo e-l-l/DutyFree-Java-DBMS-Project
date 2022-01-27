@@ -40,24 +40,31 @@ public class categoryui extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        prodNav = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         catName = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         catTable = new javax.swing.JTable();
         catAdd = new javax.swing.JButton();
         catDel = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        logoutNav = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel2.setBackground(new java.awt.Color(159, 11, 11));
-        jLabel2.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(159, 11, 11));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("CATEGORY");
+        prodNav.setBackground(new java.awt.Color(159, 11, 11));
+        prodNav.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        prodNav.setForeground(new java.awt.Color(159, 11, 11));
+        prodNav.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        prodNav.setText("PRODUCTS");
+        prodNav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                prodNavMouseClicked(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Symbol", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(159, 11, 11));
@@ -131,12 +138,29 @@ public class categoryui extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setBackground(new java.awt.Color(159, 11, 11));
+        jLabel4.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(159, 11, 11));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("CATEGORY");
+
+        logoutNav.setBackground(new java.awt.Color(159, 11, 11));
+        logoutNav.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        logoutNav.setForeground(new java.awt.Color(159, 11, 11));
+        logoutNav.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logoutNav.setText("Log Out");
+        logoutNav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutNavMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+                .addGap(90, 90, 90)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(catName, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,21 +168,29 @@ public class categoryui extends javax.swing.JFrame {
                         .addComponent(catAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(catDel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(73, 73, 73))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(logoutNav, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(prodNav, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
+                        .addGap(8, 8, 8)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(prodNav, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(65, 65, 65)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(catName, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,9 +199,11 @@ public class categoryui extends javax.swing.JFrame {
                             .addComponent(catAdd)
                             .addComponent(catDel)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(69, 69, 69)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addComponent(logoutNav, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -251,6 +285,16 @@ public void selectCat() {
         // TODO add your handling code here:
     }//GEN-LAST:event_catDelMouseClicked
 
+    private void prodNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_prodNavMouseClicked
+        new adminui().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_prodNavMouseClicked
+
+    private void logoutNavMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutNavMouseClicked
+       new logon().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_logoutNavMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -291,9 +335,11 @@ public void selectCat() {
     private javax.swing.JButton catDel;
     private javax.swing.JTextField catName;
     private javax.swing.JTable catTable;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel logoutNav;
+    private javax.swing.JLabel prodNav;
     // End of variables declaration//GEN-END:variables
 }

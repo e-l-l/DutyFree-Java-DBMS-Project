@@ -200,7 +200,7 @@
         <Component class="javax.swing.JTextField" name="prodName">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Montserrat" size="8" style="0"/>
+              <Font name="Montserrat" size="12" style="0"/>
             </Property>
           </Properties>
         </Component>
@@ -218,7 +218,7 @@
         <Component class="javax.swing.JTextField" name="prodId">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Montserrat" size="8" style="0"/>
+              <Font name="Montserrat" size="12" style="0"/>
             </Property>
           </Properties>
         </Component>
@@ -316,7 +316,7 @@
         <Component class="javax.swing.JTextField" name="prodStock">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Montserrat" size="8" style="0"/>
+              <Font name="Montserrat" size="12" style="0"/>
             </Property>
           </Properties>
           <Events>
@@ -429,7 +429,7 @@
         <Component class="javax.swing.JTextField" name="prodCost">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Montserrat" size="8" style="0"/>
+              <Font name="Montserrat" size="12" style="0"/>
             </Property>
           </Properties>
         </Component>

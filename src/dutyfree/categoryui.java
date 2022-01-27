@@ -73,7 +73,7 @@ public class categoryui extends javax.swing.JFrame {
         });
 
         catTable.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
-        catTable.setForeground(new java.awt.Color(159, 11, 11));
+        catTable.setForeground(new java.awt.Color(255, 255, 255));
         catTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
@@ -91,9 +91,9 @@ public class categoryui extends javax.swing.JFrame {
         ));
         catTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         catTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        catTable.setDebugGraphicsOptions(javax.swing.DebugGraphics.FLASH_OPTION);
-        catTable.setDropMode(javax.swing.DropMode.ON);
+        catTable.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         catTable.setRowHeight(30);
+        catTable.setSelectionBackground(new java.awt.Color(255, 255, 255));
         catTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 catTableMouseClicked(evt);

@@ -74,13 +74,13 @@ public class adminui extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Product Name");
 
-        prodName.setFont(new java.awt.Font("Montserrat", 0, 8)); // NOI18N
+        prodName.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Cost ");
 
-        prodId.setFont(new java.awt.Font("Montserrat", 0, 8)); // NOI18N
+        prodId.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
 
         prodAdd.setBackground(new java.awt.Color(0, 0, 0));
         prodAdd.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
@@ -142,7 +142,7 @@ public class adminui extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Category");
 
-        prodStock.setFont(new java.awt.Font("Montserrat", 0, 8)); // NOI18N
+        prodStock.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         prodStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 prodStockActionPerformed(evt);
@@ -191,7 +191,7 @@ public class adminui extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Product Id");
 
-        prodCost.setFont(new java.awt.Font("Montserrat", 0, 8)); // NOI18N
+        prodCost.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);

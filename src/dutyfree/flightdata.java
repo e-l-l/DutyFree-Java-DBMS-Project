@@ -38,8 +38,8 @@ public class flightdata extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        prodCat = new javax.swing.JComboBox<>();
+        prodCat1 = new javax.swing.JComboBox<>();
 
         jButton2.setBackground(new java.awt.Color(0, 0, 0));
         jButton2.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
@@ -142,11 +142,21 @@ public class flightdata extends javax.swing.JFrame {
         jTable2.setRowHeight(25);
         jScrollPane2.setViewportView(jTable2);
 
-        jButton1.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        jButton1.setText("jButton1");
+        prodCat.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        prodCat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LAX", "SFO", "EWR", "BO", "HTX" }));
+        prodCat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prodCatActionPerformed(evt);
+            }
+        });
 
-        jButton6.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        jButton6.setText("jButton6");
+        prodCat1.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        prodCat1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EMIRATES", "VISTARA", "UNITED AIRLINES" }));
+        prodCat1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prodCat1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -163,14 +173,14 @@ public class flightdata extends javax.swing.JFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jButton1))
+                        .addComponent(jLabel3)
                         .addGap(243, 243, 243)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jButton6)))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel4))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(prodCat1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(prodCat, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(128, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -184,9 +194,9 @@ public class flightdata extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton6))
-                .addGap(44, 44, 44)
+                    .addComponent(prodCat, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(prodCat1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton4)
@@ -226,6 +236,14 @@ public class flightdata extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void prodCatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prodCatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_prodCatActionPerformed
+
+    private void prodCat1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prodCat1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_prodCat1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -262,12 +280,10 @@ public class flightdata extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -276,5 +292,7 @@ public class flightdata extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JComboBox<String> prodCat;
+    private javax.swing.JComboBox<String> prodCat1;
     // End of variables declaration//GEN-END:variables
 }

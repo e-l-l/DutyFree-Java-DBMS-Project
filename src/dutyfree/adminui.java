@@ -25,6 +25,7 @@ public class adminui extends javax.swing.JFrame {
     public adminui() {
         initComponents();
         selectProd();
+        getCb();
     }
     Connection connect = null;
     Statement st = null;
@@ -133,7 +134,6 @@ public class adminui extends javax.swing.JFrame {
         });
 
         prodCat.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        prodCat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alcohol", "Cigarettes", "Chocolates", "Biscuits", "Cosmetics", "Perfumes" }));
         prodCat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 prodCatActionPerformed(evt);
@@ -349,6 +349,18 @@ public void selectProd() {
             e.printStackTrace();
         }
     }
+public void getCb(){try {
+            connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/dutyfreedb?user=root&password=Mysqlpass");
+            st = connect.createStatement();
+            rs = st.executeQuery("select * from items");
+            while (rs.next()) {
+        String cats=rs.getString("category");
+        prodCat.addItem(cats);
+    }
+            prodTable.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }}
     private void prodStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prodStockActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_prodStockActionPerformed
